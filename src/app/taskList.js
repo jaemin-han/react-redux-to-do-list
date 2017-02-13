@@ -20,7 +20,17 @@ class TaskList extends Component {
       <div>
         <ul className="task-list">
 
+          <li className="task">
+            <input type="text" ref={node => { newTask = node }} />
+            <a onClick={() => this.addTask(newTask.value)}>+</a>
+          </li>
 
+          { tasks.map(task =>
+          <li key={task.id} className={task.completed ? 'task completed' : 'task'}>
+            <span onClick={() => { onCompleteTask(task) }}>[ ]</span>
+            {task.text}
+          </li>
+          )}
         </ul>
       </div>
     )
@@ -29,7 +39,7 @@ class TaskList extends Component {
 
 function select(state) {
   return {};
-};
+}
 
 export default connect(select)(TaskList);
 
