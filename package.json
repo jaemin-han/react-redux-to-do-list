@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/jaemin-han/react-redux-to-do-list#readme",
   "devDependencies": {
-    "babel": "^6.5.2",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-runtime": "^6.22.0",
