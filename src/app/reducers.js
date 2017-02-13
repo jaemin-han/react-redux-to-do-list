@@ -37,11 +37,11 @@ function completeTaskReducer(state, action) {
   var id = action.payload.id;
 
   return Object.assign({}, state, { tasks: state.tasks.map(task => {
-    if(id === task.id) {
-      return Object.assign({}, task, { completed: true });
-    }
+      if(id === task.id) {
+        return Object.assign({}, task, { completed: true });
+      }
 
-    return task;
-  })
-});
+      return task;
+    })
+  });
 }

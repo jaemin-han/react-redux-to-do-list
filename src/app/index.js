@@ -1,5 +1,6 @@
-import { createStore } from 'redux';
 import React from 'react';
+import { createStore } from 'redux';
+
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 // Provider is a react component that allows you to use context.
@@ -12,12 +13,13 @@ let store = createStore(RootReducer);
 
 let rootElement = document.getElementById('app-root');
 
-render (
+render(
   <Provider store={store}>
     <App />
   </Provider>,
   rootElement
 );
+
 
 // store.subscribe(function(state) {
 
