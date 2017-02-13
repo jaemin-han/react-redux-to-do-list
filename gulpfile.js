@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var webpack = require('webpack-stream');
 
-gulp.tast('script', function() {
+gulp.task('scripts', function() {
   return gulp.src('./src/app/index.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('./build'))

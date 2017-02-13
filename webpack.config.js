@@ -6,7 +6,7 @@ module.exports = {
     ['.', 'src', 'app', 'index.js'].join(path.sep)
   ],
   resolve: {
-    modulesDirectories: ['node_module']
+    modulesDirectories: ['node_modules']
   },
   output: {
     path: [__dirname, 'build'].join(path.sep),

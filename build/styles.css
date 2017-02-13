@@ -1,0 +1,11 @@
+.task {
+  display: block;
+  padding: 5px;
+  border: 1px solid aqua;
+  background: #efefef;
+}
+
+.task.completed {
+  border-color: #333;
+  background: #aeaeae;
+}

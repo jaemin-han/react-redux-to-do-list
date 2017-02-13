@@ -13,9 +13,9 @@ let store = createStore(RootReducer);
 let rootElement = document.getElementById('app-root');
 
 render (
-  <Provider store=[store]>
+  <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
   rootElement
 );
 
