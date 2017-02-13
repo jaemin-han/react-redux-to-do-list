@@ -13,6 +13,7 @@ let store = createStore(RootReducer);
 
 let rootElement = document.getElementById('app-root');
 
+// the get-task is passed down to the Provider
 render(
   <Provider store={store}>
     <App />

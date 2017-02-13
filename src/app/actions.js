@@ -3,6 +3,7 @@ export const GET_TASKS = 'GET_TASKS';
 export const ADD_TASK = 'ADD_TASK';
 export const COMPLETE_TASK = 'COMPLETE_TASK';
 
+// Built in tasks - fake data
 const tasks = [
   {
     id: 1,
@@ -30,6 +31,8 @@ const tasks = [
   }
 ];
 
+// Tasks are fetched when this object is returned
+// this passes object as an action into the root-reducer
 export function getTasks() {
   return {
     type: GET_TASKS,

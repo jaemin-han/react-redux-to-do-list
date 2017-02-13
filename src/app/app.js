@@ -28,6 +28,7 @@ class App extends Component {
   // State has props, which go through 'view' and these are rendered through VIEW
   render() {
     // Need connect
+    // passed down as props in different components
     const { dispatch, habits, dailies, todos } = this.props;
 
     return (
@@ -56,6 +57,8 @@ class App extends Component {
   }
 }
 
+// It will get new tasks and filter through these below and passed down
+// as props
 function select(state) {
   return {
     habits: state.tasks.filter(task => task.type === 'habit'),
@@ -63,4 +66,7 @@ function select(state) {
     todos: state.tasks.filter(task => task.type === 'todo')
   };
 }
+
+// Application is connected to the Redux and the store
+// It will run a 'select' function above
 export default connect(select) (App);

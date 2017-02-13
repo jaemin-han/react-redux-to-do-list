@@ -16,6 +16,9 @@ class TaskList extends Component {
     const { onCompleteTask, tasks } = this.props;
     let newTask;
 
+    // Render all 'tasks' which has an Onclick action to complete the task
+    // Once you complete the task (see above)
+    // Create input text with + sign to add new task/s
     return (
       <div>
         <ul className="task-list">

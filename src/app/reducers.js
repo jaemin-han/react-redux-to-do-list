@@ -8,6 +8,10 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
 
+// Action type is to 'get tasks'
+//  Returns a task/tasks and a copy of a state and populate
+// new state with a new task
+// If complete, this passes to the store (index.js file)
   switch(action.type) {
     case GET_TASKS:
       return Object.assign({}, state, { tasks: action.payload.tasks });
