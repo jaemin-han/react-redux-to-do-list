@@ -8192,11 +8192,12 @@
 /* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';var _react=__webpack_require__(299);var _react2=_interopRequireDefault(_react);var _redux=__webpack_require__(329);var _reactDom=__webpack_require__(350);var _reactRedux=__webpack_require__(496);var _app=__webpack_require__(513);var _app2=_interopRequireDefault(_app);var _reducers=__webpack_require__(516);var _reducers2=_interopRequireDefault(_reducers);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}// Reducer is a function gets the original state and action dispatched
+	'use strict';var _react=__webpack_require__(299);var _react2=_interopRequireDefault(_react);var _redux=__webpack_require__(329);var _reactDom=__webpack_require__(350);var _reactRedux=__webpack_require__(496);var _reduxThunk=__webpack_require__(513);var _reduxThunk2=_interopRequireDefault(_reduxThunk);var _app=__webpack_require__(514);var _app2=_interopRequireDefault(_app);var _reducers=__webpack_require__(517);var _reducers2=_interopRequireDefault(_reducers);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}// Reducer is a function gets the original state and action dispatched
 	// and returns a new state with new data
 	// Provider is a react component that allows you to use context.
 	// Way to provide data across tree
-	var store=(0,_redux.createStore)(_reducers2.default);var rootElement=document.getElementById('app-root');(0,_reactDom.render)(_react2.default.createElement(_reactRedux.Provider,{store:store},_react2.default.createElement(_app2.default,null)),rootElement);// store.subscribe(function(state) {
+	var store=(0,_redux.createStore)(_reducers2.default,(0,_redux.applyMiddleware)(_reduxThunk2.default));var rootElement=document.getElementById('app-root');// the get-task is passed down to the Provider
+	(0,_reactDom.render)(_react2.default.createElement(_reactRedux.Provider,{store:store},_react2.default.createElement(_app2.default,null)),rootElement);// store.subscribe(function(state) {
 	// });
 
 /***/ },
@@ -31677,35 +31678,94 @@
 
 /***/ },
 /* 513 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ },
+/* 514 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(299);var _react2=_interopRequireDefault(_react);var _reactRedux=__webpack_require__(496);var _actions=__webpack_require__(514);var _taskList=__webpack_require__(515);var _taskList2=_interopRequireDefault(_taskList);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var App=function(_Component){_inherits(App,_Component);function App(props){_classCallCheck(this,App);return _possibleConstructorReturn(this,(App.__proto__||Object.getPrototypeOf(App)).call(this,props));}_createClass(App,[{key:'componentDidMount',value:function componentDidMount(){var dispatch=this.props.dispatch;dispatch((0,_actions.getTasks)());}},{key:'handleCompleteTask',value:function handleCompleteTask(task){var dispatch=this.props.dispatch;dispatch((0,_actions.completeTask)(task.id));}// Redux Loop: 23:21 - https://www.youtube.com/watch?v=tBya7sDXS7c
+	'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(299);var _react2=_interopRequireDefault(_react);var _reactRedux=__webpack_require__(496);var _actions=__webpack_require__(515);var _taskList=__webpack_require__(516);var _taskList2=_interopRequireDefault(_taskList);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var App=function(_Component){_inherits(App,_Component);function App(props){_classCallCheck(this,App);return _possibleConstructorReturn(this,(App.__proto__||Object.getPrototypeOf(App)).call(this,props));}_createClass(App,[{key:'componentDidMount',value:function componentDidMount(){var dispatch=this.props.dispatch;dispatch((0,_actions.getTasks)());}},{key:'handleCompleteTask',value:function handleCompleteTask(task){var dispatch=this.props.dispatch;dispatch((0,_actions.completeTask)(task.id));}// Redux Loop: 23:21 - https://www.youtube.com/watch?v=tBya7sDXS7c
 	// You have view and get data from the store
 	// when 'check marked' it triggers dispatch (id) -- passed through reducer,
 	// which modifies the state. This 'state' goes back to the 'store'
 	// 'store' notifies everyone that is connected that there is a new state.
 	// State has props, which go through 'view' and these are rendered through VIEW
 	},{key:'render',value:function render(){var _this2=this;// Need connect
-	var _props=this.props,dispatch=_props.dispatch,habits=_props.habits,dailies=_props.dailies,todos=_props.todos;return _react2.default.createElement('div',{className:'container'},_react2.default.createElement('section',null,_react2.default.createElement('h3',null,'Habits'),_react2.default.createElement(_taskList2.default,{onCompleteTask:function onCompleteTask(task){return _this2.handleCompleteTask(task);},tasks:habits,type:'habit'})),_react2.default.createElement('section',null,_react2.default.createElement('h3',null,'Dailies'),_react2.default.createElement(_taskList2.default,{onCompleteTask:function onCompleteTask(task){return _this2.handleCompleteTask(task);},tasks:dailies,type:'daily'})),_react2.default.createElement('section',null,_react2.default.createElement('h3',null,'Todos'),_react2.default.createElement(_taskList2.default,{onCompleteTask:function onCompleteTask(task){return _this2.handleCompleteTask(task);},tasks:todos,type:'todo'})));}}]);return App;}(_react.Component);function select(state){return{habits:state.tasks.filter(function(task){return task.type==='habit';}),dailies:state.tasks.filter(function(task){return task.type==='daily';}),todos:state.tasks.filter(function(task){return task.type==='todo';})};}exports.default=(0,_reactRedux.connect)(select)(App);
-
-/***/ },
-/* 514 */
-/***/ function(module, exports) {
-
-	'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.getTasks=getTasks;exports.addTask=addTask;exports.completeTask=completeTask;// Action types
-	var GET_TASKS=exports.GET_TASKS='GET_TASKS';var ADD_TASK=exports.ADD_TASK='ADD_TASK';var COMPLETE_TASK=exports.COMPLETE_TASK='COMPLETE_TASK';var tasks=[{id:1,type:'daily',text:'Check facebook',completed:false},{id:2,type:'habit',text:'Walk up the stairs',completed:false},{id:3,type:'todo',text:'Finish Redux Tutorial',completed:false},{id:4,type:'todo',text:'Finish Redux slides',completed:true}];function getTasks(){return{type:GET_TASKS,payload:{tasks:tasks}};}function addTask(text,type){return{type:ADD_TASK,payload:{text:text,type:type}};}function completeTask(id){return{type:COMPLETE_TASK,payload:{id:id}};}
+	// passed down as props in different components
+	var _props=this.props,dispatch=_props.dispatch,habits=_props.habits,dailies=_props.dailies,todos=_props.todos;return _react2.default.createElement('div',{className:'container'},_react2.default.createElement('section',null,_react2.default.createElement('h3',null,'Habits'),_react2.default.createElement(_taskList2.default,{onCompleteTask:function onCompleteTask(task){return _this2.handleCompleteTask(task);},tasks:habits,type:'habit'})),_react2.default.createElement('section',null,_react2.default.createElement('h3',null,'Dailies'),_react2.default.createElement(_taskList2.default,{onCompleteTask:function onCompleteTask(task){return _this2.handleCompleteTask(task);},tasks:dailies,type:'daily'})),_react2.default.createElement('section',null,_react2.default.createElement('h3',null,'Todos'),_react2.default.createElement(_taskList2.default,{onCompleteTask:function onCompleteTask(task){return _this2.handleCompleteTask(task);},tasks:todos,type:'todo'})));}}]);return App;}(_react.Component);// It will get new tasks and filter through these below and passed down
+	// as props
+	function select(state){return{habits:state.tasks.filter(function(task){return task.type==='habit';}),dailies:state.tasks.filter(function(task){return task.type==='daily';}),todos:state.tasks.filter(function(task){return task.type==='todo';})};}// Application is connected to the Redux and the store
+	// It will run a 'select' function above
+	exports.default=(0,_reactRedux.connect)(select)(App);
 
 /***/ },
 /* 515 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(299);var _react2=_interopRequireDefault(_react);var _reactRedux=__webpack_require__(496);var _actions=__webpack_require__(514);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var TaskList=function(_Component){_inherits(TaskList,_Component);function TaskList(props){_classCallCheck(this,TaskList);return _possibleConstructorReturn(this,(TaskList.__proto__||Object.getPrototypeOf(TaskList)).call(this,props));}_createClass(TaskList,[{key:'addTask',value:function addTask(taskText){var _props=this.props,dispatch=_props.dispatch,type=_props.type;dispatch((0,_actions.addTask)(taskText,type));}},{key:'render',value:function render(){var _this2=this;var _props2=this.props,onCompleteTask=_props2.onCompleteTask,tasks=_props2.tasks;var newTask=void 0;return _react2.default.createElement('div',null,_react2.default.createElement('ul',{className:'task-list'},_react2.default.createElement('li',{className:'task'},_react2.default.createElement('input',{type:'text',ref:function ref(node){newTask=node;}}),_react2.default.createElement('a',{onClick:function onClick(){return _this2.addTask(newTask.value);}},'+')),tasks.map(function(task){return _react2.default.createElement('li',{key:task.id,className:task.completed?'task completed':'task'},_react2.default.createElement('span',{onClick:function onClick(){onCompleteTask(task);}},'[ ]'),task.text);})));}}]);return TaskList;}(_react.Component);function select(state){return{};}exports.default=(0,_reactRedux.connect)(select)(TaskList);
+	'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.getTasks=getTasks;exports.addTask=addTask;exports.completeTask=completeTask;// Action types
+	var GET_TASKS=exports.GET_TASKS='GET_TASKS';var ADD_TASK=exports.ADD_TASK='ADD_TASK';var COMPLETE_TASK=exports.COMPLETE_TASK='COMPLETE_TASK';// Built in tasks - fake data
+	var tasks=[{id:1,type:'daily',text:'Check facebook',completed:false},{id:2,type:'habit',text:'Walk up the stairs',completed:false},{id:3,type:'todo',text:'Finish Redux Tutorial',completed:false},{id:4,type:'todo',text:'Finish Redux slides',completed:true}];// Asynchronous action creator -- only returning a promise... not json
+	// fetching
+	// export function fetchTasks() {
+	//   return function(dispatch) {
+	//     return fetch('https://habitica.com:443/api/v2/user/tasks', {
+	//       headers: {
+	//         'X-API-User': uuId,
+	//         'X-API-Key': apiToken
+	//       }
+	//     })
+	//     .then(response => response.json())
+	//     .then((json) => {
+	//       dispatch(receiveTasks(json));
+	//     });
+	//   };
+	// }
+	// Tasks are fetched when this object is returned
+	// this passes object as an action into the root-reducer
+	function getTasks(){return{type:GET_TASKS,payload:{tasks:tasks}};}function addTask(text,type){return{type:ADD_TASK,payload:{text:text,type:type}};}function completeTask(id){return{type:COMPLETE_TASK,payload:{id:id}};}
 
 /***/ },
 /* 516 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _actions=__webpack_require__(514);function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=rootReducer;var initialState={tasks:[]};function rootReducer(){var state=arguments.length>0&&arguments[0]!==undefined?arguments[0]:initialState;var action=arguments[1];switch(action.type){case _actions.GET_TASKS:return Object.assign({},state,{tasks:action.payload.tasks});case _actions.ADD_TASK:return addTaskReducer(state,action);case _actions.COMPLETE_TASK:return completeTaskReducer(state,action);default:return state;}return state;}function addTaskReducer(state,action){var task=action.payload;task.completed=false;var lastTask=state.tasks[state.tasks.length-1];task.id=lastTask.id++;return Object.assign({},state,{tasks:[].concat(_toConsumableArray(state.tasks),[task])});}function completeTaskReducer(state,action){var id=action.payload.id;return Object.assign({},state,{tasks:state.tasks.map(function(task){if(id===task.id){return Object.assign({},task,{completed:true});}return task;})});}
+	'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(299);var _react2=_interopRequireDefault(_react);var _reactRedux=__webpack_require__(496);var _actions=__webpack_require__(515);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var TaskList=function(_Component){_inherits(TaskList,_Component);function TaskList(props){_classCallCheck(this,TaskList);return _possibleConstructorReturn(this,(TaskList.__proto__||Object.getPrototypeOf(TaskList)).call(this,props));}_createClass(TaskList,[{key:'addTask',value:function addTask(taskText){var _props=this.props,dispatch=_props.dispatch,type=_props.type;dispatch((0,_actions.addTask)(taskText,type));}},{key:'render',value:function render(){var _this2=this;var _props2=this.props,onCompleteTask=_props2.onCompleteTask,tasks=_props2.tasks;var newTask=void 0;// Render all 'tasks' which has an Onclick action to complete the task
+	// Once you complete the task (see above)
+	// Create input text with + sign to add new task/s
+	return _react2.default.createElement('div',null,_react2.default.createElement('ul',{className:'task-list'},_react2.default.createElement('li',{className:'task'},_react2.default.createElement('input',{type:'text',ref:function ref(node){newTask=node;}}),_react2.default.createElement('a',{onClick:function onClick(){return _this2.addTask(newTask.value);}},'+')),tasks.map(function(task){return _react2.default.createElement('li',{key:task.id,className:task.completed?'task completed':'task'},_react2.default.createElement('span',{onClick:function onClick(){onCompleteTask(task);}},'[ ]'),task.text);})));}}]);return TaskList;}(_react.Component);function select(state){return{};}exports.default=(0,_reactRedux.connect)(select)(TaskList);
+
+/***/ },
+/* 517 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';Object.defineProperty(exports,"__esModule",{value:true});var _actions=__webpack_require__(515);function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=rootReducer;var initialState={tasks:[]};function rootReducer(){var state=arguments.length>0&&arguments[0]!==undefined?arguments[0]:initialState;var action=arguments[1];// Action type is to 'get tasks'
+	//  Returns a task/tasks and a copy of a state and populate
+	// new state with a new task
+	// If complete, this passes to the store (index.js file)
+	switch(action.type){case _actions.GET_TASKS:return Object.assign({},state,{tasks:action.payload.tasks});case _actions.ADD_TASK:return addTaskReducer(state,action);case _actions.COMPLETE_TASK:return completeTaskReducer(state,action);default:return state;}return state;}function addTaskReducer(state,action){var task=action.payload;task.completed=false;var lastTask=state.tasks[state.tasks.length-1];task.id=lastTask.id++;return Object.assign({},state,{tasks:[].concat(_toConsumableArray(state.tasks),[task])});}function completeTaskReducer(state,action){var id=action.payload.id;return Object.assign({},state,{tasks:state.tasks.map(function(task){if(id===task.id){return Object.assign({},task,{completed:true});}return task;})});}
 
 /***/ }
 /******/ ]);

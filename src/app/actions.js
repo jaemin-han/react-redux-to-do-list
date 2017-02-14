@@ -3,6 +3,7 @@ export const GET_TASKS = 'GET_TASKS';
 export const ADD_TASK = 'ADD_TASK';
 export const COMPLETE_TASK = 'COMPLETE_TASK';
 
+
 // Built in tasks - fake data
 const tasks = [
   {
@@ -30,6 +31,23 @@ const tasks = [
     completed: true
   }
 ];
+
+// Asynchronous action creator -- only returning a promise... not json
+// fetching
+// export function fetchTasks() {
+//   return function(dispatch) {
+//     return fetch('https://habitica.com:443/api/v2/user/tasks', {
+//       headers: {
+//         'X-API-User': uuId,
+//         'X-API-Key': apiToken
+//       }
+//     })
+//     .then(response => response.json())
+//     .then((json) => {
+//       dispatch(receiveTasks(json));
+//     });
+//   };
+// }
 
 // Tasks are fetched when this object is returned
 // this passes object as an action into the root-reducer

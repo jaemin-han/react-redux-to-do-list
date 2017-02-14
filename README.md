@@ -1,6 +1,6 @@
 # react-redux-to-do-list
 
-Building your first React + Redux Application
+Building your first React + Redux Application<br>
 https://www.youtube.com/watch?v=n7AgFQXU0R0&t=25s
 https://www.youtube.com/watch?v=EKvvqEHWvH4
 https://www.youtube.com/watch?v=tBya7sDXS7c
